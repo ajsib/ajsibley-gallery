@@ -1,36 +1,104 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Project Overview: AJSibley Domain Ecosystem - Gallery Application
 
-## Getting Started
+## Executive Summary
 
-First, run the development server:
+The **AJSibley Gallery Application** is part of the AJSibley domain ecosystem, designed to offer users a platform for storing, organizing, and sharing their personal photos. The application integrates MongoDB as the database for managing user and photo metadata and utilizes Microsoft Azure Storage for securely storing the actual image files. Built using **Next.js**, the application focuses on simplicity and efficiency, making it easy for users to upload, manage, and share their photo collections.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+The architecture of the Gallery Application is a simple, scalable system built with modern web technologies:
+- **Next.js** for the frontend and backend.
+- **MongoDB** for database operations.
+- **Microsoft Azure Storage** for storing photos.
+- **pnpm** for package management and efficient dependency handling.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Features:
+1. **User-friendly photo storage**: Easily upload, manage, and view photos.
+2. **Photo sharing**: Share your photo albums with other users.
+3. **Secure storage**: Images are stored securely on Microsoft Azure's cloud storage.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The inspiration behind this project is to create a robust, private photo-sharing platform that can scale as your gallery grows, offering cloud storage and secure image sharing with minimal effort.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Application Architecture
 
-## Learn More
+### 1. **Frontend**
+- Built using **Next.js**, the frontend provides a responsive, modern interface for users to upload, manage, and view their images.
+  
+### 2. **Backend**
+- The Next.js backend handles authentication, data flow, and communication between the frontend, MongoDB, and Microsoft Azure Storage.
+  
+### 3. **Database** (MongoDB)
+- MongoDB is used to store user data, metadata related to each photo (such as upload date, title, etc.), and permissions related to photo sharing.
 
-To learn more about Next.js, take a look at the following resources:
+### 4. **Storage** (Microsoft Azure Storage)
+- Microsoft Azure Storage is responsible for securely storing and retrieving the actual image files uploaded by users.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 5. **Package Management** (pnpm)
+- We use `pnpm` for efficient package management. It speeds up the installation process and optimizes disk space usage compared to traditional package managers like npm or yarn.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## Steps to Get the Gallery Application Running
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Prerequisites
+Make sure you have the following installed on your machine before starting:
+- **Node.js** (v14 or above)
+- **pnpm** package manager
+- **MongoDB** (locally or cloud instance)
+- **Microsoft Azure Storage Account**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Installation Instructions
+
+#### Windows and Linux
+
+1. **Clone the Repository**
+   First, clone the project repository from the version control system (GitHub, Bitbucket, etc.).
+
+   ```bash
+   git clone https://github.com/ajsib/ajsibley-gallery.git
+   cd ajsibley-gallery
+   ```
+
+2. **Install Dependencies**
+   We are using `pnpm` to handle dependencies. To install all necessary packages, run:
+
+   ```bash
+   pnpm install
+   ```
+
+3. **Setup Environment Variables**
+   Create an `.env.local` file at the root of the project directory and add the following environment variables. This configuration ensures the app can connect to MongoDB and Microsoft Azure Storage.
+
+   ```bash
+   MONGODB_URI=themongourikeyused
+   AZURE_STORAGE_ACCOUNT_NAME=your_storage_account_name
+   AZURE_STORAGE_ACCOUNT_KEY=your_storage_account_key
+   AZURE_CONTAINER_NAME=your_container_name
+   ```
+
+   Adjust these values based on your local or cloud configuration.
+
+4. **Database Setup (MongoDB)**
+   Ensure MongoDB is running either locally or in the cloud (e.g., MongoDB Atlas). If running locally, you can start MongoDB with:
+
+   ```bash
+   mongod
+   ```
+
+   The application will connect to the database specified by the `MONGODB_URI` in the environment variables.
+
+5. **Run Development Server**
+   To start the Next.js development server, use the following command:
+
+   ```bash
+   pnpm run dev
+   ```
+
+   The application will now be accessible at `http://localhost:3000`.
+
+6. **Access and Use the Application**
+   Open your browser and visit `http://localhost:3000`. You can now interact with the gallery, upload photos, and share them with others.
+
+---
+
+## Conclusion
+
+The AJSible Gallery Application provides an easy-to-use platform for managing and sharing personal photos. With a solid architecture backed by Next.js, MongoDB, and Microsoft Azure Storage, the application ensures data security and scalability. The combination of a user-friendly interface and a robust backend allows users to effortlessly store, organize, and share their photo collections.
