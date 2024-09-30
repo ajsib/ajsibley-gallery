@@ -1,0 +1,140 @@
+/* styles/_fonts.css */
+
+/* Inter Font Family */
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter/Inter-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter/Inter-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter/Inter-Italic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter/Inter-BoldItalic.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+}
+
+/* Add more Inter weights as needed */
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter/Inter-Light-BETA.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter/Inter-Black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter/Inter-BlackItalic.otf') format('opentype');
+  font-weight: 900;
+  font-style: italic;
+}
+
+/* Merriweather Font Family */
+@font-face {
+  font-family: 'Merriweather';
+  src: url('/fonts/merriweather/Merriweather-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Merriweather';
+  src: url('/fonts/merriweather/Merriweather-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Merriweather';
+  src: url('/fonts/merriweather/Merriweather-Italic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Merriweather';
+  src: url('/fonts/merriweather/Merriweather-BoldItalic.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+}
+
+/* Add more Merriweather weights as needed */
+@font-face {
+  font-family: 'Merriweather';
+  src: url('/fonts/merriweather/Merriweather-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+/* Source Sans Pro Font Family */
+@font-face {
+  font-family: 'Source Sans Pro';
+  src: url('/fonts/source-sans-pro/SourceSansPro-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Source Sans Pro';
+  src: url('/fonts/source-sans-pro/SourceSansPro-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Source Sans Pro';
+  src: url('/fonts/source-sans-pro/SourceSansPro-It.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Source Sans Pro';
+  src: url('/fonts/source-sans-pro/SourceSansPro-BoldIt.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+}
+
+/* Add more Source Sans Pro weights as needed */
+@font-face {
+  font-family: 'Source Sans Pro';
+  src: url('/fonts/source-sans-pro/SourceSansPro-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Source Sans Pro';
+  src: url('/fonts/source-sans-pro/SourceSansPro-Black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Source Sans Pro';
+  src: url('/fonts/source-sans-pro/SourceSansPro-BlackIt.otf') format('opentype');
+  font-weight: 900;
+  font-style: italic;
+}

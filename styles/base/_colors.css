@@ -1,0 +1,43 @@
+/* styles/base/_colors.css */
+
+/* Light Mode Color Palette */
+:root {
+  --color-primary: #0078d4; /* Azure Blue */
+  --color-secondary: #4a4a4a; /* Neutral Darker Gray */
+  --color-accent: #a0a0a0; /* Neutral Gray Accent */
+  --color-background: #f3f2f1; /* Light Background */
+  --color-component-bg: #ffffff; /* White Component Background */
+  --color-text: #323130; /* Main Text Color */
+  --color-muted: #7a7a7a; /* Muted Text Color */
+  --color-border: #c8c8c8; /* Light Gray Border Color */
+  --color-link: #0645ad; /* Wikipedia Blue Link */
+  --color-visited-link: #0b0080; /* Wikipedia Visited Link (Purple) */
+
+  /* Hover Effects */
+  --color-hover-primary: #005fa3; /* Darker Azure Blue for hover */
+  --color-hover-secondary: #3a3a3a; /* Darker gray for hover */
+  --color-hover-background: #e2e2e2; /* Slightly darker background for hover */
+  --color-hover-link: #002b7b; /* Darker blue on link hover */
+}
+
+/* Dark Mode Color Palette */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-primary: #61dafb; /* Lighter Blue */
+    --color-secondary: #e1e1e1; /* Light Gray Text */
+    --color-accent: #8a8a8a; /* Neutral Gray Accent */
+    --color-background: #0d0d0d; /* Vanta Black Background */
+    --color-component-bg: #1a1a1a; /* Off-Black Component Background */
+    --color-text: #f3f2f1; /* Light Text Color */
+    --color-muted: #a1a1a1; /* Muted Light Gray Color */
+    --color-border: #3e3e3e; /* Dark Border Color */
+    --color-link: #9bb8ff; /* Wikipedia-like Blue Link */
+    --color-visited-link: #9370db; /* Wikipedia-like Visited Link (Purple) */
+
+    /* Hover Effects */
+    --color-hover-primary: #21a1e1; /* Slightly darker blue for hover */
+    --color-hover-secondary: #bcbcbc; /* Darker light gray for hover */
+    --color-hover-background: #2d2d2d; /* Darker background for hover */
+    --color-hover-link: #6a90e0; /* Darker blue on link hover */
+  }
+}

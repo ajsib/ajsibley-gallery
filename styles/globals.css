@@ -1,0 +1,36 @@
+/* styles/globals.css */
+
+@import './base/_reset.css';
+@import './base/_fonts.css';
+@import './base/_colors.css';
+@import './base/_typography.css';
+
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevent horizontal overflow */
+  box-sizing: border-box;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: 'Inter', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit; /* Ensure all elements use border-box */
+}
+
+
+button {
+  font-family: 'Source Sans Pro', sans-serif;
+  background-color: var(--color-primary);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+button:hover {
+  background-color: var(--color-accent);
+}
