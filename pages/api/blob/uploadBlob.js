@@ -15,7 +15,7 @@ export default async function handler(req, res) {
       await blockBlobClient.upload(data, data.length);
 
       res.status(200).json({ url: blockBlobClient.url });
-    } catch (error) {
+    } catch {
       res.status(500).json({ error: 'Failed to upload blob' });
     }
   } else {

@@ -7,7 +7,7 @@ import SearchBar from './SearchBar';
 import { useState } from 'react';
 
 const MainContent = () => {
-  const [activeTab, setActiveTab] = useState('all-galleries');
+  const [activeTab, setActiveTab] = useState<'your-galleries' | 'all-galleries' | 'shared-galleries'>('all-galleries');
 
   const mainContentStyle = css`
     padding: 20px;

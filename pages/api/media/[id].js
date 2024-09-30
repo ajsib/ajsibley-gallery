@@ -1,6 +1,6 @@
 import { getSession } from 'next-auth/react';
 import Media from '@/models/Media';
-import Gallery from '@/models/Gallery';
+// import Gallery from '@/models/Gallery';
 import { connectToDatabase } from '@/utils/mongoose';
 import blobServiceClient from '@/utils/blobServiceClient';
 
@@ -35,7 +35,7 @@ export default async function handler(req, res) {
     await media.deleteOne();
 
     return res.status(200).json({ message: 'Media deleted successfully' });
-  } catch (error) {
+  } catch {
     return res.status(500).json({ error: 'Failed to delete media' });
   }
 }

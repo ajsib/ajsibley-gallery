@@ -86,7 +86,7 @@ const LoginForm = ({ onSwitch, onLogin, loading, error }: LoginFormProps) => {
         {loading ? 'Logging in...' : 'Login'}
       </button>
       <div css={switchTextStyle}>
-        Don't have an account?
+        Don&apos;t have an account?
         <span css={linkStyle} onClick={onSwitch}>
           Register here
         </span>

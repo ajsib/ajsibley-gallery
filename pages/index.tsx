@@ -39,7 +39,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         },
       },
     };
-  } catch (error) {
+  } catch {
     return {
       redirect: {
         destination: '/welcome',

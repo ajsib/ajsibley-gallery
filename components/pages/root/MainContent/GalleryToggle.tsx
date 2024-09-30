@@ -2,8 +2,8 @@
 import { css } from '@emotion/react';
 
 interface GalleryToggleProps {
-  activeTab: string;
-  setActiveTab: (tab: string) => void;
+  activeTab: 'your-galleries' | 'all-galleries' | 'shared-galleries'; // Constrain to valid tab names
+  setActiveTab: (tab: 'your-galleries' | 'all-galleries' | 'shared-galleries') => void; // Correct typing for setActiveTab
 }
 
 const GalleryToggle = ({ activeTab, setActiveTab }: GalleryToggleProps) => {

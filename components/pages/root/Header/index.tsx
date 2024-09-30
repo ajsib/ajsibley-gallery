@@ -79,7 +79,7 @@ const HeaderSection = ({ username }: HeaderProps) => {
       />
       <div css={overlay}>
         <h1 css={greetingText}>{greeting}, {username}!</h1>
-        <p css={subText}>Here's your photo gallery dashboard.</p>
+        <p css={subText}>Here&apos;s your photo gallery dashboard.</p>
       </div>
     </div>
   );

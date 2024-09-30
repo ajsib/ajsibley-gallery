@@ -1,6 +1,3 @@
-/** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
-
 const ProfileIcon = ({ size = '24px', color = 'currentColor' }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"

@@ -47,8 +47,12 @@ const AuthContainer = () => {
     try {
       const result = await loginUser(email, password); // Login API call
       login(result.token); // Store token and set user as logged in
-    } catch (e: any) {
-      setError(e.message);
+    } catch (e: unknown) {  // Replace `any` with `unknown`
+      if (e instanceof Error) {  // Type guard for `Error` type
+        setError(e.message);
+      } else {
+        setError('An unknown error occurred.');
+      }
     } finally {
       setLoading(false);
     }
@@ -66,8 +70,12 @@ const AuthContainer = () => {
     try {
       const result = await registerUser(username, email, password); // Register API call
       login(result.token); // Store token after successful registration
-    } catch (e: any) {
-      setError(e.message);
+    } catch (e: unknown) {  // Replace `any` with `unknown`
+      if (e instanceof Error) {  // Type guard for `Error` type
+        setError(e.message);
+      } else {
+        setError('An unknown error occurred.');
+      }
     } finally {
       setLoading(false);
     }

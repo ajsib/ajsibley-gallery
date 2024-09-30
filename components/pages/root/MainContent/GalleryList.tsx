@@ -1,9 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import GalleryCard from './GalleryCard';
+import { Key } from 'react';
 
 interface GalleryListProps {
-  activeTab: string;
+  activeTab: 'your-galleries' | 'all-galleries' | 'shared-galleries';
 }
 
 const GalleryList = ({ activeTab }: GalleryListProps) => {
@@ -28,11 +29,11 @@ const GalleryList = ({ activeTab }: GalleryListProps) => {
     gap: 20px;
   `;
 
-  const galleriesToShow = galleries[activeTab];
+  const galleriesToShow = galleries[activeTab as 'your-galleries' | 'all-galleries' | 'shared-galleries'];
 
   return (
     <div css={galleryListStyle}>
-      {galleriesToShow.map((gallery) => (
+      {galleriesToShow.map((gallery: { id: Key | null | undefined; name: string; description: string | undefined; thumbnail: string; owner: string; }) => (
         <GalleryCard 
           key={gallery.id} 
           name={gallery.name}

@@ -37,7 +37,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
           permanent: false,
         },
       };
-    } catch (error) {
+    } catch {
       // Token is invalid or expired, no redirect needed, continue rendering welcome page
     }
   }
