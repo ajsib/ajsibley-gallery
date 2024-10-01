@@ -4,16 +4,14 @@ import React, { useState } from 'react';
 
 interface HamburgerIconProps {
   isOpen?: boolean; // External control for the toggle state
-  primaryColor?: string;
-  secondaryColor?: string;
+  color?: string;
   size?: string;
   onToggle?: (isOpen: boolean) => void; // Callback for external state management
 }
 
 const HamburgerIcon: React.FC<HamburgerIconProps> = ({
   isOpen: isOpenProp = false,
-  primaryColor = 'currentColor',
-  secondaryColor = 'currentColor',
+  color = 'currentColor',
   size = '24px',
   onToggle,
 }) => {
@@ -49,7 +47,7 @@ const HamburgerIcon: React.FC<HamburgerIconProps> = ({
             y1="56"
             x2="56"
             y2="200"
-            stroke={primaryColor}
+            stroke={color}
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth="16"
@@ -59,7 +57,7 @@ const HamburgerIcon: React.FC<HamburgerIconProps> = ({
             y1="200"
             x2="56"
             y2="56"
-            stroke={primaryColor}
+            stroke={color}
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth="16"
@@ -78,7 +76,7 @@ const HamburgerIcon: React.FC<HamburgerIconProps> = ({
             x2="216"
             y2="64"
             fill="none"
-            stroke={primaryColor}
+            stroke={color}
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth="16"
@@ -89,7 +87,7 @@ const HamburgerIcon: React.FC<HamburgerIconProps> = ({
             x2="216"
             y2="128"
             fill="none"
-            stroke={secondaryColor}
+            stroke={color}
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth="16"
@@ -100,7 +98,7 @@ const HamburgerIcon: React.FC<HamburgerIconProps> = ({
             x2="216"
             y2="192"
             fill="none"
-            stroke={primaryColor}
+            stroke={color}
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth="16"

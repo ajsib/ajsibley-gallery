@@ -3,7 +3,6 @@ import { css } from '@emotion/react';
 import { useState } from 'react';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
-import { useAuth } from '@/context/AuthContext'; // Use the AuthContext
 import { registerUser, loginUser } from './services';
 
 const containerStyle = css`
@@ -38,17 +37,15 @@ const AuthContainer = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const { login } = useAuth(); // Use login from AuthContext
 
   // Handle login API call
   const handleLogin = async (email: string, password: string) => {
     setLoading(true);
     setError('');
     try {
-      const result = await loginUser(email, password); // Login API call
-      login(result.token); // Store token and set user as logged in
-    } catch (e: unknown) {  // Replace `any` with `unknown`
-      if (e instanceof Error) {  // Type guard for `Error` type
+      await loginUser(email, password); // The service function will handle token storage and reloading
+    } catch (e: unknown) {
+      if (e instanceof Error) {
         setError(e.message);
       } else {
         setError('An unknown error occurred.');
@@ -68,10 +65,9 @@ const AuthContainer = () => {
       return;
     }
     try {
-      const result = await registerUser(username, email, password); // Register API call
-      login(result.token); // Store token after successful registration
-    } catch (e: unknown) {  // Replace `any` with `unknown`
-      if (e instanceof Error) {  // Type guard for `Error` type
+      await registerUser(username, email, password); // The service function will handle token storage and reloading
+    } catch (e: unknown) {
+      if (e instanceof Error) {
         setError(e.message);
       } else {
         setError('An unknown error occurred.');

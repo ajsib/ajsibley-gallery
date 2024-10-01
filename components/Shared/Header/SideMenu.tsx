@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import Link from 'next/link';
-import { useHeaderContext } from './HeaderContext';
 
 interface SideMenuProps {
   user?: {
@@ -12,22 +11,21 @@ interface SideMenuProps {
   logout: () => void;
 }
 
-const SideMenu = ({ user, logout }: SideMenuProps) => {
-  const { headerHeight } = useHeaderContext();
+const sideMenuHeight = 60;
 
+const SideMenu = ({ user, logout }: SideMenuProps) => {
   const sideMenuStyles = css`
     position: fixed;
-    top: ${headerHeight}px;
+    top: ${sideMenuHeight}px;
     left: 0;
     width: 250px;
-    height: calc(100% - ${headerHeight}px);
+    height: calc(100% - ${sideMenuHeight}px);
     background-color: var(--color-component-bg);
     border-right: 1px solid var(--color-border);
     padding: 16px;
     box-sizing: border-box;
     overflow-y: auto;
     z-index: 999;
-    transition: top 0.2s ease;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
