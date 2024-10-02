@@ -1,4 +1,6 @@
 // pages/index.tsx
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
 import { GetServerSideProps } from 'next';
 import { authenticateUser } from '@/utils/authentication/auth';
 import { logoutUser } from '@/components/pages/root/services'
@@ -22,12 +24,14 @@ const MainPage = ({ user }: MainPageProps) => {
     return <p>Loading user data...</p>;
   }
 
-  const contentStyle = { marginTop: '0px' };
+  const contentStyle =  css`
+    min-height: calc(100vh + 45px);
+  `
 
   return (
     <>
       <Header user={user} logout={logoutUser} />
-      <div style={contentStyle}>
+      <div css={contentStyle}>
         <HeaderSection username={user.username} />
         <MainContent />
       </div>

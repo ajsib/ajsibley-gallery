@@ -1,14 +1,11 @@
-import { NextApiRequest, NextApiResponse } from 'next';
 import { validateToken } from '@/utils/authentication/tokenValidationMiddleware';
 import Gallery from '@/models/Gallery';
 import { connectToDatabase } from '@/utils/mongoose';
 import { customAlphabet } from 'nanoid';
 
-// Define the alphabet for numbers and uppercase letters only
 const nanoid = customAlphabet('1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ', 5);
 
-// Define the handler with proper TypeScript types
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (req, res) => {
   await connectToDatabase();
 
   if (req.method === 'POST') {
@@ -19,10 +16,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     // Ensure unique access code by checking the database
-    let accessCode: string;
+    let accessCode;
     let isUnique = false;
 
-    // Loop to ensure the access code is unique
     do {
       accessCode = nanoid(); // Generate a new code
       const existingGallery = await Gallery.findOne({ accessCode });
@@ -34,9 +30,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const gallery = new Gallery({
       name,
       description,
-      owner: (req as any).user.userId,  // Using (req as any) to handle the custom property `user`
-      accessCode,  // Unique access code
-      members: [(req as any).user.userId], // Add the owner as the first member
+      owner: { userId: req.user.userId, username: req.user.username },  // Store both userId and username
+      accessCode,
+      members: [req.user.userId],
     });
 
     await gallery.save();
@@ -45,8 +41,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (req.method === 'GET') {
     const galleries = await Gallery.find({
-      members: (req as any).user.userId,
-    }).populate('owner', 'username email');
+      $or: [
+        { members: req.user.userId },
+        { owner: { userId: req.user.userId } }
+      ],
+    })
+      .sort({ updatedAt: -1 }) // Sort by updatedAt in descending order
+      .populate('owner.userId', 'username email');  // Populate owner details
 
     return res.status(200).json({ galleries });
   }

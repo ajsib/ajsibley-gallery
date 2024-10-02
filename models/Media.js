@@ -1,4 +1,5 @@
-import mongoose from 'mongoose';
+import mongoose from '@/utils/mongoose';
+import Gallery from '@/models/Gallery';
 
 const MediaSchema = new mongoose.Schema({
   fileName: {
@@ -19,7 +20,7 @@ const MediaSchema = new mongoose.Schema({
   },
   gallery: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Gallery',  // References the gallery this media belongs to
+    ref: Gallery,  // References the gallery this media belongs to
     required: true,
   },
   uploadedBy: {

@@ -1,4 +1,5 @@
-import mongoose from 'mongoose';
+import mongoose from '@/utils/mongoose';
+import User from '@/models/User';
 
 const GallerySchema = new mongoose.Schema({
   name: {
@@ -9,9 +10,15 @@ const GallerySchema = new mongoose.Schema({
     type: String,
   },
   owner: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',  // References the user who owns the gallery
-    required: true,
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: User,  // References the user ID of the gallery owner
+      required: true,
+    },
+    username: {
+      type: String,
+      required: true,  // Store the username of the owner
+    },
   },
   accessCode: {
     type: String,
@@ -19,7 +26,7 @@ const GallerySchema = new mongoose.Schema({
   },
   members: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',  // Users who have access to the gallery
+    ref: User,  // Users who have access to the gallery
   }],
   media: [{
     type: mongoose.Schema.Types.ObjectId,
@@ -27,6 +34,11 @@ const GallerySchema = new mongoose.Schema({
   }],
   thumbnail: {
     type: String, // URL or reference to the thumbnail image
+  },
+  shared: {
+    type: Boolean,
+    default: false, // Default is false
+    required: true, // Field is required
   },
   createdAt: {
     type: Date,

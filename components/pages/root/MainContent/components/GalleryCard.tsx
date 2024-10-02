@@ -5,7 +5,7 @@ import { useState } from 'react';
 interface GalleryCardProps {
   name: string;
   description?: string;
-  thumbnail: string;
+  thumbnail?: string | "";
   ownerName: string;
 }
 
@@ -76,7 +76,7 @@ const GalleryCard = ({ name, description, thumbnail, ownerName }: GalleryCardPro
   const menuButtonStyle = css`
     position: absolute;
     top: 10px;
-    right: 10px;
+    right: 20px;
     background: none;
     border: none;
     font-size: 18px;

@@ -1,9 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import GalleryList from './GalleryList';
-import CreateGalleryButton from './CreateGalleryButton';
-import GalleryToggle from './GalleryToggle';
-import SearchBar from './SearchBar';
+import GalleryList from './components/GalleryList';
+import CreateGalleryButton from './components/CreateGalleryButton';
+import GalleryToggle from './components/GalleryToggle';
+import SearchBar from './components/SearchBar';
+import { GalleryProvider } from './GalleryContext';
 import { useState } from 'react';
 
 const MainContent = () => {
@@ -46,25 +47,27 @@ const MainContent = () => {
   `;
 
   return (
-    <div css={mainContentStyle}>
-      <div css={headerStyle}>
-        <h2 css={titleStyle}>
-          {activeTab === 'all-galleries' && 'All Galleries'}
-          {activeTab === 'your-galleries' && 'Your Galleries'}
-          {activeTab === 'shared-galleries' && 'Shared Galleries'}
-        </h2>
-        <GalleryToggle activeTab={activeTab} setActiveTab={setActiveTab} />
-      </div>
-      <div css={searchAndButtonContainer}>
-        <div css={searchBarContainer}>
-          <SearchBar />
+    <GalleryProvider>
+      <div css={mainContentStyle}>
+        <div css={headerStyle}>
+          <h2 css={titleStyle}>
+            {activeTab === 'all-galleries' && 'All Galleries'}
+            {activeTab === 'your-galleries' && 'Your Galleries'}
+            {activeTab === 'shared-galleries' && 'Shared Galleries'}
+          </h2>
+          <GalleryToggle activeTab={activeTab} setActiveTab={setActiveTab} />
         </div>
-        <div css={buttonContainer}>
-          <CreateGalleryButton />
+        <div css={searchAndButtonContainer}>
+          <div css={searchBarContainer}>
+            <SearchBar />
+          </div>
+          <div css={buttonContainer}>
+            <CreateGalleryButton />
+          </div>
         </div>
+        <GalleryList activeTab={activeTab} />
       </div>
-      <GalleryList activeTab={activeTab} />
-    </div>
+    </GalleryProvider>
   );
 };
 

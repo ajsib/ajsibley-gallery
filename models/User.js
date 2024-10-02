@@ -1,5 +1,5 @@
 // models/User.js
-import mongoose from 'mongoose';
+import mongoose from '@/utils/mongoose';
 
 const UserSchema = new mongoose.Schema({
   username: {

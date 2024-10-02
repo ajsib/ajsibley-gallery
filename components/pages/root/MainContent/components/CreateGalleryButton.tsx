@@ -21,7 +21,7 @@ const CreateGalleryButton = () => {
       </SecondaryButton>
 
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <CreateNewGalleryModal />
+        <CreateNewGalleryModal onClose={closeModal}/>
       </Modal>
     </>
   );
