@@ -61,7 +61,7 @@ export const loginUser = async (email: string, password: string) => {
   const data = await response.json();
 
   // Set the token in cookies
-  Cookies.set('token', data.token, { expires: 1 }); // 1 day expiration
+  Cookies.set('token', data.token, { expires: 1, path: '/' }); // 1 day expiration
 
   // Reload the page to reflect authentication status
   window.location.reload();

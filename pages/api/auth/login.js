@@ -38,7 +38,7 @@ export default async function handler(req, res) {
     // Set JWT in httpOnly cookie
     res.setHeader('Set-Cookie', cookie.serialize('token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV !== 'development', // Use secure cookies in production
+      secure: true, // Always use secure cookies, even in development
       sameSite: 'strict',
       maxAge: 3600, // 1 hour
       path: '/',
