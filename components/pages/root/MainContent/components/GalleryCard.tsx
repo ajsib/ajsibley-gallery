@@ -3,16 +3,18 @@ import { css } from '@emotion/react';
 import { useState } from 'react';
 
 interface GalleryCardProps {
+  galleryId: string;
   name: string;
   description?: string;
   thumbnail?: string | "";
   ownerName: string;
+  onClick: (id: string) => void;
 }
 
 const maxTitleLength = 30;
 const maxDescriptionLength = 100;
 
-const GalleryCard = ({ name, description, thumbnail, ownerName }: GalleryCardProps) => {
+const GalleryCard = ({ galleryId, name, description, thumbnail, ownerName, onClick }: GalleryCardProps) => {
   const [isMenuOpen, setMenuOpen] = useState(false);
 
   const cardStyle = css`
@@ -29,6 +31,7 @@ const GalleryCard = ({ name, description, thumbnail, ownerName }: GalleryCardPro
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
   `;
+  
 
   const thumbnailStyle = css`
     width: 100%;
@@ -134,8 +137,12 @@ const GalleryCard = ({ name, description, thumbnail, ownerName }: GalleryCardPro
     setMenuOpen(false);
   };
 
+  const handleCardClick = () => {
+    onClick(galleryId); // Pass the gallery ID to the handler
+  };
+
   return (
-    <div css={cardStyle}>
+    <div css={cardStyle} onClick={handleCardClick}>
       <div css={thumbnailStyle}></div>
       <div css={contentStyle}>
         <h3 css={titleStyle}>{name.length > maxTitleLength ? name.substring(0, maxTitleLength) + '...' : name}</h3>

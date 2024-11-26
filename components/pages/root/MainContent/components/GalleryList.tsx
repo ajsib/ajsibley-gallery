@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { css } from '@emotion/react';
 import GalleryCard from './GalleryCard';
 import { useGalleryContext } from '../GalleryContext'; // Import the custom hook from context
+import { useRouter } from 'next/router';
 
 interface GalleryListProps {
   activeTab: 'your-galleries' | 'all-galleries' | 'shared-galleries';
@@ -11,6 +12,7 @@ interface GalleryListProps {
 const GalleryList = ({ activeTab }: GalleryListProps) => {
   const { galleries, fetchGalleries } = useGalleryContext(); // Use the context hook to get gallery data and fetch function
   const [loading, setLoading] = useState<boolean>(true);
+  const router = useRouter();
 
   // Fetch galleries on component mount
   useEffect(() => {
@@ -37,6 +39,10 @@ const GalleryList = ({ activeTab }: GalleryListProps) => {
     return galleries; // For 'all-galleries', return all
   };
 
+  const handleCardClick = (galleryId: string) => {
+    router.push(`/gallery/${galleryId}`);
+  };
+
   const filteredGalleries = getFilteredGalleries();
 
   const galleryListStyle = css`
@@ -54,10 +60,12 @@ const GalleryList = ({ activeTab }: GalleryListProps) => {
       {filteredGalleries.map((gallery) => (
         <GalleryCard 
           key={gallery._id.toString()} 
+          galleryId={gallery._id.toString()}
           name={gallery.name}
           description={gallery.description}
           thumbnail={gallery.thumbnail}
           ownerName={gallery.owner.username}
+          onClick={handleCardClick}
         />
       ))}
     </div>

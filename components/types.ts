@@ -28,3 +28,16 @@ export interface Gallery {
     createdAt: Date;
     updatedAt: Date;
   }
+
+  export interface Media {
+    _id: string; // MongoDB ID as a string
+    fileName: string; // Name of the file
+    url: string; // URL of the file in Azure Blob Storage
+    mimeType: string; // MIME type (e.g., image/jpeg, video/mp4)
+    size: number; // Size of the file in bytes
+    gallery: string; // Reference to the gallery (can be ObjectId or string)
+    uploadedBy: string; // Reference to the uploader (can be ObjectId or string)
+    createdAt: string; // ISO string for date
+  }
+  
+  
