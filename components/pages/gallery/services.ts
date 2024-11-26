@@ -2,64 +2,41 @@ import Cookies from 'js-cookie';
 import { Media } from "@/components/types"
 
 /**
- * Interface for the upload URL response.
+ * Upload files and generate thumbnails.
  */
-interface UploadUrlResponse {
-  uploadUrl: string;
-  media: Media;
-}
+const uploadFiles = async (galleryId: string, files: File[]): Promise<Media[]> => {
+  const formData = new FormData();
+  files.forEach((file) => formData.append('files', file));
 
-/**
- * Generate a signed upload URL and create media reference.
- */
-const getUploadUrl = async (
-  galleryId: string,
-  fileName: string,
-  mimeType: string,
-  size: number
-): Promise<UploadUrlResponse> => {
-  const response = await fetch(`/api/galleries/${galleryId}/upload-url`, {
+  const response = await fetch(`/api/galleries/${galleryId}/upload`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
       Authorization: `Bearer ${Cookies.get('token') || ''}`,
     },
-    body: JSON.stringify({ fileName, mimeType, size }),
+    body: formData,
   });
 
   if (!response.ok) {
     const error = await response.json();
-    throw new Error(error.error || 'Failed to get upload URL');
+    throw new Error(error.error || 'Failed to upload files');
   }
 
-  const data: UploadUrlResponse = await response.json();
-  return data;
+  return response.json();
 };
 
 /**
- * Upload a file directly to Azure Blob Storage.
- */
-const uploadFileDirectly = async (uploadUrl: string, file: File): Promise<void> => {
-  const response = await fetch(uploadUrl, {
-    method: 'PUT',
-    headers: { 'x-ms-blob-type': 'BlockBlob' },
-    body: file,
-  });
-
-  if (!response.ok) {
-    throw new Error('Failed to upload file directly');
-  }
-};
-
-/**
- * Interface for gallery file.
+ * Interface for gallery file. 
  */
 interface GalleryResponse {
   gallery: {
     name: string;
     description: string;
   };
-  media: Media[];
+  media: MediaWithThumbnails[];
+}
+
+interface MediaWithThumbnails extends Media {
+  thumbnailUrl: string;
 }
 
 /**
@@ -70,7 +47,8 @@ const getGalleryFiles = async (
   page = 1,
   limit = 10
 ): Promise<GalleryResponse> => {
-  const response = await fetch(`/api/galleries/${galleryId}?page=${page}&limit=${limit}`, {
+  console.log("[LOG] Service Function Triggered getGalleryFiles");
+  const response = await fetch(`/api/galleries/${galleryId}/paginatedFetch?page=${page}&limit=${limit}`, {
     headers: {
       Authorization: `Bearer ${Cookies.get('token') || ''}`,
     },
@@ -85,4 +63,5 @@ const getGalleryFiles = async (
   return data;
 };
 
-export { getGalleryFiles, getUploadUrl, uploadFileDirectly };
+
+export { getGalleryFiles, uploadFiles };

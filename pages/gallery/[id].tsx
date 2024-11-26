@@ -1,4 +1,3 @@
-// /pages/gallery/[id].tsx
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { useRouter } from 'next/router';
@@ -8,9 +7,7 @@ import { logoutUser } from '@/components/pages/root/services';
 import Header from '@/components/Shared/Header';
 import HeaderSection from '@/components/pages/gallery/Header';
 import MainContent from '@/components/pages/gallery/MainContent';
-import { GalleryProvider } from '@/components/pages/gallery/MainContent/GalleryContext';
-import { getGalleryFiles } from '@/components/pages/gallery/services';
-import { useEffect, useState } from 'react';
+import { GalleryProvider, useGalleryContext } from '@/components/pages/gallery/MainContent/GalleryContext';
 
 export const getServerSideProps: GetServerSideProps = authenticateUser;
 
@@ -25,9 +22,6 @@ interface GalleryDetailsProps {
 const GalleryDetails = ({ user }: GalleryDetailsProps) => {
   const router = useRouter();
   const { id } = router.query;
-
-  const [galleryName, setGalleryName] = useState('');
-  const [galleryDescription, setGalleryDescription] = useState('');
 
   const pageStyle = css`
     display: flex;
@@ -47,22 +41,6 @@ const GalleryDetails = ({ user }: GalleryDetailsProps) => {
     padding: 20px;
   `;
 
-  useEffect(() => {
-    const fetchGalleryInfo = async () => {
-      if (id && typeof id === 'string') {
-        try {
-          const data = await getGalleryFiles(id);
-          setGalleryName(data.gallery.name);
-          setGalleryDescription(data.gallery.description);
-        } catch (error) {
-          console.error('Error fetching gallery info:', error);
-        }
-      }
-    };
-
-    fetchGalleryInfo();
-  }, [id]);
-
   if (!user) {
     return <div>Loading user data...</div>;
   }
@@ -75,15 +53,22 @@ const GalleryDetails = ({ user }: GalleryDetailsProps) => {
     <>
       <Header user={user} logout={logoutUser} />
       <div css={pageStyle}>
-        <HeaderSection galleryName={galleryName} galleryDescription={galleryDescription} />
-        <div css={contentStyle}>
-          <GalleryProvider>
+        <GalleryProvider>
+          <HeaderSectionFromContext />
+          <div css={contentStyle}>
             <MainContent galleryId={id} />
-          </GalleryProvider>
-        </div>
+          </div>
+        </GalleryProvider>
       </div>
     </>
   );
+};
+
+// Component to display header section with context data
+const HeaderSectionFromContext = () => {
+  const { galleryName, galleryDescription } = useGalleryContext();
+
+  return <HeaderSection galleryName={galleryName} galleryDescription={galleryDescription} />;
 };
 
 export default GalleryDetails;

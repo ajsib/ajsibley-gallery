@@ -38,6 +38,7 @@ export interface Gallery {
     gallery: string; // Reference to the gallery (can be ObjectId or string)
     uploadedBy: string; // Reference to the uploader (can be ObjectId or string)
     createdAt: string; // ISO string for date
+    thumbnail: string | null;
   }
   
   

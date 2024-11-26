@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { useState } from 'react';
-import { getUploadUrl, uploadFileDirectly } from '@/components/pages/gallery/services';
+import { uploadFiles } from '@/components/pages/gallery/services';
 import { useGalleryContext } from '@/components/pages/gallery/MainContent/GalleryContext';
 
 interface UploadFileModalProps {
@@ -41,45 +41,33 @@ const formStyle = css`
 `;
 
 const UploadFileModal = ({ galleryId, onClose }: UploadFileModalProps) => {
-  const [file, setFile] = useState<File | null>(null);
+  const [files, setFiles] = useState<File[]>([]);
   const { appendMedia } = useGalleryContext();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setFile(e.target.files[0]);
+    if (e.target.files) {
+      setFiles(Array.from(e.target.files));
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!file) return;
+    if (!files.length) return;
 
     try {
-      // Step 1: Get signed upload URL and media reference
-      const { uploadUrl, media } = await getUploadUrl(
-        galleryId,
-        file.name,
-        file.type,
-        file.size
-      );
-
-      // Step 2: Upload file directly to Azure Blob Storage
-      await uploadFileDirectly(uploadUrl, file);
-
-      // Step 3: Append the new media to context
-      appendMedia(media);
-
+      const uploadedMedia = await uploadFiles(galleryId, files);
+      uploadedMedia.forEach(media => appendMedia(media));
       onClose();
     } catch (error) {
-      console.error('Error uploading file:', error);
+      console.error('Error uploading files:', error);
     }
   };
 
   return (
     <form css={formStyle} onSubmit={handleSubmit}>
-      <h2>Upload a File</h2>
-      <input type="file" accept="image/*,video/*" onChange={handleFileChange} required />
+      <h2>Upload Files</h2>
+      <input type="file" multiple accept="image/*" onChange={handleFileChange} required />
       <button type="submit">Upload</button>
     </form>
   );

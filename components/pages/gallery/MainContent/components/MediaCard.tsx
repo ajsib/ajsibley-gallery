@@ -1,10 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { FC } from 'react';
+import Image from 'next/image'; // Import Next.js Image
 import { Media } from '@/components/types';
 
 interface MediaCardProps {
-  media: Media;
+  media: Media & { thumbnail: string | null };
 }
 
 const MediaCard: FC<MediaCardProps> = ({ media }) => {
@@ -23,12 +24,10 @@ const MediaCard: FC<MediaCardProps> = ({ media }) => {
     }
   `;
 
-  const thumbnailStyle = css`
+  const thumbnailContainerStyle = css`
     width: 100%;
     height: 150px;
-    background-size: cover;
-    background-position: center;
-    background-image: url(${media.url});
+    position: relative; /* Required for Next.js Image layout="fill" */
   `;
 
   const contentStyle = css`
@@ -55,7 +54,15 @@ const MediaCard: FC<MediaCardProps> = ({ media }) => {
 
   return (
     <div css={cardStyle} onClick={handleCardClick}>
-      <div css={thumbnailStyle}></div>
+      <div css={thumbnailContainerStyle}>
+        <Image
+          src={media.thumbnail ? `data:image/jpeg;base64,${media.thumbnail}` : '/placeholder-thumbnail.jpg'}
+          alt={media.fileName}
+          layout="fill" // Covers the container
+          objectFit="cover" // Ensures the image fills the container proportionally
+          priority // Optimized for above-the-fold content
+        />
+      </div>
       <div css={contentStyle}>
         <h3 css={titleStyle}>{media.fileName}</h3>
       </div>
