@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { FC } from 'react'; // Import React's functional component type
+import { FC } from 'react';
 import { Media } from '@/components/types';
 
 interface MediaCardProps {
-  media: Media; // Ensure the `media` prop matches the `Media` interface
+  media: Media;
 }
 
 const MediaCard: FC<MediaCardProps> = ({ media }) => {
@@ -50,7 +50,6 @@ const MediaCard: FC<MediaCardProps> = ({ media }) => {
   `;
 
   const handleCardClick = () => {
-    // Implement logic to open media in a modal or new page
     console.log('Media clicked:', media.fileName);
   };
 
