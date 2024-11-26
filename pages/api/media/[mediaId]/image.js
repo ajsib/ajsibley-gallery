@@ -1,7 +1,6 @@
 import { validateToken } from '@/utils/authentication/tokenValidationMiddleware';
 import { getBlobServiceClient } from '@/utils/blobServiceClient';
 import Media from '@/models/Media';
-import Gallery from '@/models/Gallery';
 import { connectToDatabase } from '@/utils/mongoose';
 
 const handler = async (req, res) => {
