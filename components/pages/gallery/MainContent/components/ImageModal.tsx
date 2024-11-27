@@ -74,18 +74,20 @@ const ImageModal: FC<ImageModalProps> = ({ galleryId, fileName }) => {
 
   const imageSrc = `/api/galleries/${galleryId}/media/${fileName}`;
 
+  const customLoader = ({ src }: { src: string }) => src;
+
   return (
       <div css={modalContentStyle}>
         <div css={imageWrapperStyle}>
           {isLoading && <div css={loadingStyle}>Loading image...</div>}
           <Image
+            loader={customLoader}
             src={imageSrc}
             alt={fileName}
             layout="fill"
             objectFit="contain"
             onLoadingComplete={() => setIsLoading(false)}
             priority
-            unoptimized
           />
         </div>
         <div css={titleStyle}>{fileName}</div>
