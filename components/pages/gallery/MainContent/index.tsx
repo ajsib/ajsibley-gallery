@@ -4,6 +4,7 @@ import SearchBar from './components/SearchBar';
 import MediaFilter from './components/MediaFilter';
 import UploadFileButton from './components/UploadFileButton';
 import MediaList from './components/MediaList';
+import Breadcrumbs from './components/Breadcrumbs';
 
 interface MainContentProps {
   galleryId: string;
@@ -18,6 +19,7 @@ const MainContent = ({ galleryId }: MainContentProps) => {
 
   return (
     <div css={containerStyle}>
+      <Breadcrumbs /> {/* Add Breadcrumbs here */}
       <div
         css={css`
           display: flex;
