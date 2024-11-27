@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { ReactNode, useEffect } from 'react';
-import ReactDOM from 'react-dom';
 
 interface ModalProps {
   children: ReactNode;
@@ -28,7 +27,7 @@ const Modal = ({ children, isOpen, onClose, maxWidth = '600px', maxHeight = '80%
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.5); /* Use a semi-transparent overlay */
     display: ${isOpen ? 'flex' : 'none'};
     justify-content: center;
     align-items: center;
@@ -37,13 +36,15 @@ const Modal = ({ children, isOpen, onClose, maxWidth = '600px', maxHeight = '80%
 
   const modalContentWrapperStyle = css`
     position: relative;
-    background: #fff;
+    background: var(--color-component-bg); /* Adaptive component background */
+    color: var(--color-text); /* Adaptive text color */
     width: 90%;
     max-width: ${maxWidth};
     max-height: ${maxHeight};
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    border: 1px solid var(--color-border); /* Add a border matching the theme */
 
     @media (max-width: 600px) {
       width: 95%;
@@ -59,28 +60,28 @@ const Modal = ({ children, isOpen, onClose, maxWidth = '600px', maxHeight = '80%
   `;
 
   const closeButtonStyle = css`
-  background: none;
-  border: none;
-  font-size: 24px;
-  font-weight: bold;
-  color: #888;
-  cursor: pointer;
-  transition: color 0.3s ease;
+    background: none;
+    border: none;
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--color-muted); /* Use muted color for close button */
+    cursor: pointer;
+    transition: color 0.3s ease;
 
-  &:hover {
-    background: none; /* Prevent background highlight */
-    color: #000; /* Slightly darken text color on hover for feedback */
-  }
+    &:hover {
+      background: none; /* Prevent background highlight */
+      color: var(--color-hover-primary); /* Theme hover color */
+    }
 
-  &:focus-visible {
-    outline: 2px solid #555; /* Show outline only when focused via keyboard */
-    outline-offset: 4px; /* Add space between the outline and the button */
-  }
+    &:focus-visible {
+      outline: 2px solid var(--color-primary); /* Show outline in theme color */
+      outline-offset: 4px; /* Add space between the outline and the button */
+    }
 
-  &:focus {
-    outline: none; /* Prevent default browser focus styles */
-  }
-`;
+    &:focus {
+      outline: none; /* Prevent default browser focus styles */
+    }
+  `;
 
   const modalChildrenStyle = css`
     flex: 1; /* Ensures children fill the modal while leaving space for the close button */
@@ -92,7 +93,7 @@ const Modal = ({ children, isOpen, onClose, maxWidth = '600px', maxHeight = '80%
     return null;
   }
 
-  return ReactDOM.createPortal(
+  return (
     <div css={modalOverlayStyle} onClick={onClose}>
       <div
         css={modalContentWrapperStyle}
@@ -105,8 +106,7 @@ const Modal = ({ children, isOpen, onClose, maxWidth = '600px', maxHeight = '80%
         </div>
         <div css={modalChildrenStyle}>{children}</div>
       </div>
-    </div>,
-    document.body
+    </div>
   );
 };
 
