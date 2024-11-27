@@ -109,7 +109,8 @@ const MediaList = ({ galleryId }: MediaListProps) => {
   const handleModalClose = () => {
     console.log("Modal close triggered.");
     isModalClosing.current = true; // Indicate modal is being closed
-    const { mediaId, ...remainingQuery } = router.query;
+    const remainingQuery = { ...router.query };
+    delete remainingQuery.mediaId; // Remove mediaId directly
     router
       .replace(
         {
