@@ -27,12 +27,18 @@ const uploadFiles = async (galleryId: string, files: File[]): Promise<Media[]> =
 /**
  * Interface for gallery file. 
  */
+// Define the GalleryResponse interface
 interface GalleryResponse {
   gallery: {
-    name: string;
-    description: string;
+    name: string; // Name of the gallery
+    description: string; // Description of the gallery
   };
-  media: MediaWithThumbnails[];
+  media: MediaWithThumbnails[]; // Array of media with thumbnails
+  pagination: {
+    currentPage: number; // Current page number
+    totalPages: number; // Total number of pages available
+    hasMore: boolean; // Indicates if there are more pages to fetch
+  };
 }
 
 interface MediaWithThumbnails extends Media {
@@ -47,7 +53,7 @@ const getGalleryFiles = async (
   page = 1,
   limit = 10
 ): Promise<GalleryResponse> => {
-  console.log("[LOG] Service Function Triggered getGalleryFiles");
+  console.log(`[LOG] Service Function Triggered getGalleryFiles - Page: ${page}`);
   const response = await fetch(`/api/galleries/${galleryId}/paginatedFetch?page=${page}&limit=${limit}`, {
     headers: {
       Authorization: `Bearer ${Cookies.get('token') || ''}`,

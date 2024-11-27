@@ -11,8 +11,7 @@ const handler = async (req, res) => {
 
     await connectToDatabase();
 
-    const { id, fileName } = req.query;
-    const { thumbnail } = req.query;
+    const { id, fileName, thumbnail } = req.query;
     const user = req.user;
 
     if (!id || !fileName) {
@@ -48,7 +47,8 @@ const handler = async (req, res) => {
 
     const blobDownloadResponse = await blobClient.download();
 
-    // Set appropriate headers and stream the file to the client
+    // Set Cache-Control headers
+    res.setHeader('Cache-Control', 'public, max-age=31536000, immutable'); // Cache for 1 year
     res.setHeader('Content-Type', blobDownloadResponse.contentType || 'application/octet-stream');
     res.setHeader('Content-Length', blobDownloadResponse.contentLength);
     blobDownloadResponse.readableStreamBody.pipe(res);

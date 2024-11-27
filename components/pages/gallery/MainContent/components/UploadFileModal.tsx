@@ -57,7 +57,7 @@ const UploadFileModal = ({ galleryId, onClose }: UploadFileModalProps) => {
 
     try {
       const uploadedMedia = await uploadFiles(galleryId, files);
-      uploadedMedia.forEach(media => appendMedia(media));
+      uploadedMedia.forEach(media => appendMedia(media, galleryId)); // Pass galleryId for thumbnail URL
       onClose();
     } catch (error) {
       console.error('Error uploading files:', error);

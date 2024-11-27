@@ -7,7 +7,8 @@ interface GalleryContextType {
   galleryName: string;
   galleryDescription: string;
   fetchGalleryFiles: (galleryId: string) => Promise<void>;
-  appendMedia: (newMedia: Media) => void;
+  appendMedia: (newMedia: Media, galleryId: string) => void;
+  hasMore: boolean;
 }
 
 const GalleryContext = createContext<GalleryContextType | undefined>(undefined);
@@ -28,26 +29,41 @@ export const GalleryProvider: React.FC<GalleryProviderProps> = ({ children }) =>
   const [media, setMedia] = useState<Media[]>([]);
   const [galleryName, setGalleryName] = useState<string>('');
   const [galleryDescription, setGalleryDescription] = useState<string>('');
+  const [hasMore, setHasMore] = useState<boolean>(true); // Initialize state
 
-  const fetchGalleryFiles = async (galleryId: string) => {
-    console.log("[LOG] Call Fetch Gallery");
+  const fetchGalleryFiles = async (galleryId: string, page = 1, limit = 25, reset = false) => {
     try {
-      const data = await getGalleryFiles(galleryId);
-      setMedia(data.media); // Update media
-      setGalleryName(data.gallery.name); // Update gallery name
-      setGalleryDescription(data.gallery.description); // Update gallery description
+      const data = await getGalleryFiles(galleryId, page, limit);
+      setMedia((prev) => (reset ? data.media : [...prev, ...data.media]));
+      setGalleryName(data.gallery.name);
+      setGalleryDescription(data.gallery.description);
+      setHasMore(data.pagination.hasMore);
     } catch (error) {
       console.error('Error fetching gallery files:', error);
     }
   };
 
-  const appendMedia = (newMedia: Media) => {
-    setMedia((prevMedia) => [newMedia, ...prevMedia]); // Add the new media at the start
+  const appendMedia = (newMedia: Media, galleryId: string) => {
+    const mediaWithThumbnail = {
+      ...newMedia,
+      thumbnail: `/api/galleries/${galleryId}/media/${newMedia.fileName}?thumbnail=true`,
+    };
+    setMedia((prevMedia) => [mediaWithThumbnail, ...prevMedia]);
   };
 
   return (
-    <GalleryContext.Provider value={{ media, galleryName, galleryDescription, fetchGalleryFiles, appendMedia }}>
+    <GalleryContext.Provider
+      value={{
+        media,
+        galleryName,
+        galleryDescription,
+        fetchGalleryFiles,
+        appendMedia,
+        hasMore, // Pass hasMore to the context
+      }}
+    >
       {children}
     </GalleryContext.Provider>
   );
 };
+

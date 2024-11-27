@@ -4,14 +4,14 @@ import jwt from 'jsonwebtoken';
 import { parse } from 'cookie';
 
 export const authenticateUser = async (context: GetServerSidePropsContext) => {
-  const { req } = context;
+  const { req, resolvedUrl } = context;
   const cookies = req.headers.cookie ? parse(req.headers.cookie) : {};
   const token = cookies.token;
 
   if (!token) {
     return {
       redirect: {
-        destination: '/welcome',
+        destination: `/welcome?redirectTo=${encodeURIComponent(resolvedUrl)}`,
         permanent: false,
       },
     };
@@ -31,7 +31,7 @@ export const authenticateUser = async (context: GetServerSidePropsContext) => {
   } catch {
     return {
       redirect: {
-        destination: '/welcome',
+        destination: `/welcome?redirectTo=${encodeURIComponent(resolvedUrl)}`,
         permanent: false,
       },
     };

@@ -12,7 +12,7 @@ const handler = async (req, res) => {
 
     await connectToDatabase();
 
-    const { id, page = 1, limit = 10 } = req.query;
+    const { id, page = 1, limit = 25 } = req.query;
     const user = req.user;
 
     if (!id) {
