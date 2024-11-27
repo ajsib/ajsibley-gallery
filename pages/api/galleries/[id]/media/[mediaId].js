@@ -9,6 +9,7 @@ import blobServiceClient from '@/utils/blobServiceClient';
 const handler = async (req, res) => {
   try {
     if (req.method !== 'GET') {
+      res.setHeader('Cache-Control', 'no-store'); // No caching for invalid methods
       return res.status(405).json({ error: 'Method not allowed' });
     }
 
@@ -18,26 +19,31 @@ const handler = async (req, res) => {
     const user = req.user;
 
     if (!id || !mediaId) {
+      res.setHeader('Cache-Control', 'no-store'); // No caching for bad requests
       return res.status(400).json({ error: 'Gallery ID and media ID are required' });
     }
 
     // Fetch the gallery and validate access
     const gallery = await Gallery.findById(id).lean();
     if (!gallery) {
+      res.setHeader('Cache-Control', 'no-store'); // No caching for non-existent galleries
       return res.status(404).json({ error: 'Gallery not found' });
     }
 
     const isAuthorized =
-      gallery.owner.userId.toString() === user.userId.toString() ||
-      gallery.members.some((memberId) => memberId.toString() === user.userId.toString());
+      user &&
+      (gallery.owner.userId.toString() === user.userId.toString() ||
+        gallery.members.some((memberId) => memberId.toString() === user.userId.toString()));
 
     if (!isAuthorized) {
+      res.setHeader('Cache-Control', 'no-store'); // No caching for unauthorized users
       return res.status(403).json({ error: 'You do not have permission to view this gallery' });
     }
 
     // Fetch the media file by ID
     const media = await Media.findById(mediaId).lean();
     if (!media) {
+      res.setHeader('Cache-Control', 'no-store'); // No caching for missing media
       return res.status(404).json({ error: 'Media not found' });
     }
 
@@ -51,13 +57,15 @@ const handler = async (req, res) => {
     const blobClient = containerClient.getBlobClient(filePath);
 
     if (!(await blobClient.exists())) {
+      res.setHeader('Cache-Control', 'no-store'); // No caching for missing files
       return res.status(404).json({ error: 'File not found' });
     }
 
     const blobDownloadResponse = await blobClient.download();
 
-    // Set Cache-Control headers
-    res.setHeader('Cache-Control', 'public, max-age=31536000, immutable'); // Cache for 1 year
+    // Set Cache-Control headers to ensure privacy
+    res.setHeader('Cache-Control', 'private, max-age=31536000, immutable'); // Cache only for this user
+    res.setHeader('Vary', 'Cookie'); // Ensure user-specific caching
     res.setHeader('Content-Type', blobDownloadResponse.contentType || 'application/octet-stream');
     res.setHeader('Content-Length', blobDownloadResponse.contentLength);
     blobDownloadResponse.readableStreamBody.pipe(res);
