@@ -85,6 +85,7 @@ const ImageModal: FC<ImageModalProps> = ({ galleryId, fileName }) => {
             objectFit="contain"
             onLoadingComplete={() => setIsLoading(false)}
             priority
+            unoptimized
           />
         </div>
         <div css={titleStyle}>{fileName}</div>
